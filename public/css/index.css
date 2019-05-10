@@ -117,6 +117,10 @@ input[type="checkbox"] {
 	border-top: 1px solid #e6e6e6;
 }
 
+#main.is-visible {
+	display: block;
+}
+
 label[for='toggle-all'] {
 	display: none;
 }
@@ -252,6 +256,10 @@ label[for='toggle-all'] {
 	height: 20px;
 	text-align: center;
 	border-top: 1px solid #e6e6e6;
+}
+
+#footer.is-visible {
+	display: block;
 }
 
 #footer:before {
