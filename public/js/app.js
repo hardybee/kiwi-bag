@@ -5,9 +5,9 @@
 		return a === b ? options.fn(this) : options.inverse(this);
 	});
 
+	var todos = store('todos-jquery');
 	var ENTER_KEY = 13;
 	var ESCAPE_KEY = 27;
-	
 	var urlFilter;
 
 	function uuid () {
@@ -29,7 +29,6 @@
 		return count === 1 ? word : word + 's';
 	};
 	
-	
 	function store(namespace, data) {
 		if (arguments.length > 1) {
 			return localStorage.setItem(namespace, JSON.stringify(data));
@@ -39,8 +38,7 @@
 		}
 	};
 	
-	var todos = store('todos-jquery');
-
+	// getActiveTodos: Use the filter function to return the todo items where completed = false
 	function getActiveTodos() {
 		return todos.filter(function(todo) {
 			return !todo.completed;
@@ -53,7 +51,7 @@
 		var footer = document.getElementById('footer');
 		var template = footerTemplate({
 			activeTodoCount: activeTodoCount,
-			activeTodoWord: pluralize(activeTodoCount, 'item'),
+			activeTodoWord: pluralize(activeTodoCount, 'todo'),
 			completedTodos: todoCount - activeTodoCount,
 			filter: urlFilter
 		});
@@ -67,6 +65,7 @@
 
 	};
 
+	// getFilteredTodos: Use director.js url filter to determine return value
 	function getFilteredTodos() {
 		if (urlFilter === 'active') {
 			return getActiveTodos();
@@ -81,7 +80,6 @@
 	
 	function render() {
 		var todos = getFilteredTodos();
-
 		var todoList = document.querySelector('#todo-list');
 		todoList.innerHTML = todoTemplate(todos);
 		var mainEl = document.querySelector('#main');
@@ -119,27 +117,27 @@
 		});
 	};
 
-	function destroyCompleted(e) {
-		if (e.target.getAttribute('id') == 'clear-completed') {
+	function destroyCompleted(event) {
+		if (event.target.getAttribute('id') == 'clear-completed') {
 			todos = getActiveTodos();
 			urlFilter = 'all';
 			render();
 		}
 	};
 
-	function edit (e) {
-		var listItem = e.target.closest('li');
+	function edit (event) {
+		var listItem = event.target.closest('li');
 		listItem.classList.add('editing');
 		var input = listItem.querySelector('.edit');
 		input.focus();
 		input.selectionStart = input.selectionEnd = input.value.length;
 	};
 
-	function create(e) {
-		var input = e.target;
+	function create(event) {
+		var input = event.target;
 		var val = input.value;
 
-		if (e.key !== 'Enter' || !val) {
+		if (event.key !== 'Enter' || !val) {
 			return;
 		}
 
@@ -154,8 +152,8 @@
 		render();
 	};
 
-	function toggleAll(e) {
-		var isChecked = e.target.checked;
+	function toggleAll(event) {
+		var isChecked = event.target.checked;
 
 		todos.forEach(function (todo) {
 			todo.completed = isChecked;
@@ -175,41 +173,41 @@
 		}
 	};
 
-	function toggle(e) {
-		if (e.target.matches('.toggle')) {
-			var i = indexFromEl(e.target);
+	function toggle(event) {
+		if (event.target.matches('.toggle')) {
+			var i = indexFromEl(event.target);
 			todos[i].completed = !todos[i].completed;
 			render();
 		}
 	};
 
-	function editKeyup(e) {
+	function editKeyup(event) {
 
-		if (e.target.matches('.edit')) {
-			if (e.key === 'Enter') {
-				e.target.blur();
+		if (event.target.matches('.edit')) {
+			if (event.key === 'Enter') {
+				event.target.blur();
 			}
 
-			if (e.key === 'Escape') {
-				e.target.setAttribute('abort', true);
-				e.target.blur();
+			if (event.key === 'Escape') {
+				event.target.setAttribute('abort', true);
+				event.target.blur();
 			}
 		}
 	};
 
-	function destroy(e) {
-		if (e.target.matches('.destroy')) {
-			todos.splice(indexFromEl(e.target), 1);
+	function destroy(event) {
+		if (event.target.matches('.destroy')) {
+			todos.splice(indexFromEl(event.target), 1);
 			render();
 		}
 	}
 
-	function update(e) {
-		if (e.target.matches('.edit')) {
-			var el = e.target;
+	function update(event) {
+		if (event.target.matches('.edit')) {
+			var el = event.target;
 			var val = el.value.trim();
 			if (!val) {
-				destroy(e);
+				destroy(event);
 				return;
 			}
 			if (el.hasAttribute('abort')) {

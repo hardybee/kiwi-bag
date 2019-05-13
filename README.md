@@ -1,61 +1,39 @@
-**TodoMVC jQuery**
+# TodoMVC - Source Code Review Exercises
 
-URL: https://hyperdev.com/#!/project/maze-stealer
+This project is based on the Practical Javascript TodoMVC series.
 
-This is the workspace for the watchandcode.com
-screencast series on the jQuery version of TodoMVC.
+## Original Code
 
-**How to Read Source Code**
+Use the code here as the starting point for these exercises:
+https://glitch.com/edit/#!/maze-stealer?path=public/js/app.js
 
-Why it’s important
 
-1. Most of your time will be spent reading, not writing.
-2. Simulates working at a company or open source project.
-3. Fastest way to learn.
-4. Reading makes you a better writer (just like English).
-5. Learn how to ignore large parts of a codebase and get a piece-by-piece understanding.
+## Step 1 - Make everything a function
 
-Before you start
+Take the code above and rewrite it such that there are 
+no methods defined in app.js. None, not even one.
+Here's a concrete example: 
 
-1. Read the docs (if they exist).
-2. Run the code.
-3. Play with the app to see what the code is supposed to do.
-4. Think about how the code might be implemented.
-5. Get the code into an editor.
+If you have this in your app:
 
-The process
+```javascript
+var myObject = {
+  sayHello: function () {
+    console.log('hello!');
+  }
+};
+```
 
-1. Look at the file structure.
-2. Get a sense for the vocabulary.
-3. Keep a note of unfamiliar concepts that you'll need to research later.
-4. Do a quick read-through without diving into concepts from #3.
-5. Test one feature with the debugger.
-6. Document and add comments to confusing areas.
-7. Research items in #3 only if required.
-8. Repeat.
+You should rewrite it so that it looks like this:
 
-Next level
+```javascript
+function sayHello() {
+  console.log('hello!');
+}
+```
 
-1. Replicate parts of the app by hand (in the console).
-2. Make small changes and see what happens.
-3. Add a new feature.
+## Step 2 - Remove jQuery
 
-Unfamiliar concepts
+Make the application work exactly as the original code but do so without any jQuery. For example, remove jQuery from app.js method-by-method (create, destroy, etc). Once you’re done, remove the jQuery script tag from index.html (line 56 of original code).
 
-1. jQuery.
-2. What is the role of base.js?
-3. What is the role of director.js
-4. Handlebars.
-5. uuid
-6. localStorage.
-7. JSON.
-
-Useful links
-
-1. https://github.com/tastejs/todomvc/blob/master/app-spec.md
-
-Notes
-
-1. Go through the debugger on .getActiveTodos and .destroyCompleted.
-2. See what `this` is without using bind.
-3. Talk about method chaining.
+If successful, everything in your modified application should work exactly as it did in the original application. 
